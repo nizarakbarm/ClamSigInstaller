@@ -27,7 +27,7 @@ install_clamav_centos() {
         exit 1
     fi
     rpm -i clamav-$version.linux.x86_64.rpm
-        if [[ $? -ne 0 ]]; then
+    if [[ $? -ne 0 ]]; then
         echo "Warning: unable to install clamav-$version.linux.x86_64.rpm!"
         exit 1
     fi
