@@ -20,6 +20,7 @@ latestlts_release=$(curl -s -A @ua https://www.clamav.net/downloads -L | grep '<
 #Install ClamAV for Ubuntu and Debian
 install_clamav_ubuntu() {
     #$1 is version
+    version="$1"
     curl -A @ua -o "clamav-$version.linux.x86_64.deb" -L "https://www.clamav.net/downloads/production/clamav-$version.linux.x86_64.deb"
     if [[ $? -ne 0 ]]; then
         echo "Warning: unable to download clamav-$version.linux.x86_64.deb!"
@@ -35,6 +36,7 @@ install_clamav_ubuntu() {
 #Install ClamAV for Centos
 install_clamav_centos() {
     #$! is version
+    version="$1"
     curl -A @ua -o "clamav-$version.linux.x86_64.rpm" "https://www.clamav.net/downloads/production/clamav-$version.linux.x86_64.rpm"
     if [[ $? -ne 0 ]]; then
         echo "Warning: unable to download clamav-$version.linux.x86_64.rpm!"
