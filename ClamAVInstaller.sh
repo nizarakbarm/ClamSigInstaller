@@ -4,7 +4,11 @@
 if [ ! -f "/usr/bin/html-xml-utils" ]; then
     case $(grep -E '^(NAME)=' /etc/os-release | cut -d"=" -f2 | tr -d '"') in
         Ubuntu|Debian)
+            sed -i "/#\$nrconf{restart} = 'i';/s/.*/\$nrconf{restart} = 'a';/" /etc/needrestart/needrestart.conf
+            sed -i "/#\$nrconf{kernelhints} = -1;/s/.*/\$nrconf{kernelhints} = -1;/" /etc/needrestart/needrestart.conf
             apt install -y html-xml-utils
+            sed -i "/\$nrconf{restart} = 'a';/s/.*/#\$nrconf{restart} = 'i';/" /etc/needrestart/needrestart.conf
+            sed -i "/\$nrconf{kernelhints} = -1;/s/.*/#\$nrconf{kernelhints} = -1;/" /etc/needrestart/needrestart.conf
             ;;
         Centos)
             yum install -y html-xml-utils
@@ -21,6 +25,8 @@ latestlts_release=$(curl -s -A @ua https://www.clamav.net/downloads -L | grep '<
 install_clamav_ubuntu() {
     #$1 is version
     version="$1"
+    sed -i "/#\$nrconf{restart} = 'i';/s/.*/\$nrconf{restart} = 'a';/" /etc/needrestart/needrestart.conf
+    sed -i "/#\$nrconf{kernelhints} = -1;/s/.*/\$nrconf{kernelhints} = -1;/" /etc/needrestart/needrestart.conf
     curl -A @ua -o "clamav-$version.linux.x86_64.deb" -L "https://www.clamav.net/downloads/production/clamav-$version.linux.x86_64.deb"
     if [[ $? -ne 0 ]]; then
         echo "Warning: unable to download clamav-$version.linux.x86_64.deb!"
@@ -31,6 +37,8 @@ install_clamav_ubuntu() {
         echo "Warning: unable to install clamav-$version.linux.x86_64.deb!"
         exit 1
     fi
+    sed -i "/\$nrconf{restart} = 'a';/s/.*/#\$nrconf{restart} = 'i';/" /etc/needrestart/needrestart.conf
+    sed -i "/\$nrconf{kernelhints} = -1;/s/.*/#\$nrconf{kernelhints} = -1;/" /etc/needrestart/needrestart.conf
 }
 
 #Install ClamAV for Centos
